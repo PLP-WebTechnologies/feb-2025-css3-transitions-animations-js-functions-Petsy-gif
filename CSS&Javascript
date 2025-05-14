@@ -1,0 +1,50 @@
+""import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+
+export default function InteractiveApp() {
+  const [userPreference, setUserPreference] = useState('');
+  const [animate, setAnimate] = useState(false);
+
+  // Retrieve from localStorage on component mount
+  useEffect(() => {
+    const storedPreference = localStorage.getItem('userPreference');
+    if (storedPreference) {
+      setUserPreference(storedPreference);
+    }
+  }, []);
+
+  // Store in localStorage when preference changes
+  const handleSavePreference = () => {
+    localStorage.setItem('userPreference', userPreference);
+    setAnimate(true);
+    setTimeout(() => setAnimate(false), 1500); // Animation duration
+  };
+
+  return (
+    <div className="p-5 flex flex-col items-center gap-5">
+      <input
+        type="text"
+        placeholder="Enter your preference..."
+        value={userPreference}
+        onChange={(e) => setUserPreference(e.target.value)}
+        className="border p-2 rounded-md w-full max-w-md"
+      />
+      <Button onClick={handleSavePreference} className="bg-blue-500 hover:bg-blue-600 text-white">
+        Save Preference
+      </Button>
+
+      {animate && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mt-5 p-4 rounded-lg bg-green-100 text-green-700"
+        >
+          Preference Saved!
+        </motion.div>
+      )}
+    </div>
+  );
+}
+""
